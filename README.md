@@ -5,3 +5,6 @@
 - [HW3](HW3) ⌛ Waiting for assessment
 - [HW4](HW4) ⌛ Waiting for assessment
 - [HW5](HW5) ⌛ Waiting for assessment
+- HW6 ⌛ TODO
+- [HW7](HW7) ⌛ Waiting for assessment
+- HW8 ⌛ TODO
