@@ -1,0 +1,6 @@
+# Python (+ mypy) cache
+__pycache__/
+.mypy_cache/
+
+# Database data
+/*/data/
