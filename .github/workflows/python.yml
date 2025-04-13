@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   lint:
-    name: Lint & Test Python code
+    name: Lint Python code
     runs-on: ubuntu-latest
 
     steps:
