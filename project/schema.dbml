@@ -1,0 +1,56 @@
+Project RiichiMahjong {
+  database_type: "PostgreSQL"
+}
+
+Table players {
+  id SERIAL [pk]
+  username TEXT [unique, not null, note: "Unique identifier for each player, used for login."]
+  display_name TEXT [note: "The player's display name, which can be different from the username."]
+  rating INTEGER [default: 1500, note: "Player's rating, starting at 1500. It can be used to measure player skill."]
+  country TEXT [note: "Player's country of origin, optional field to track player demographics."]
+}
+
+Table games {
+  id SERIAL [pk]
+  start_time TIMESTAMP [note: "Timestamp of when the game started."]
+  end_time TIMESTAMP [note: "Timestamp of when the game ended. NULL if the game is not completed."]
+  winner_id INT [ref: > players.id, note: "References the player who won the game. NULL if no winner yet."]
+  wind TEXT [note: "Wind direction for the game, either 'East' or 'South', representing the round."]
+  dealer_id INT [ref: > players.id, note: "References the player who started as dealer for this game."]
+}
+
+Table player_status {
+  id SERIAL [pk]
+  game_id INT [ref: > games.id, note: "References the game to which this player belongs."]
+  player_id INT [ref: > players.id, note: "References the player in the game."]
+  wind TEXT [note: "The seat position of the player in the game. Possible values are 'East', 'South', 'West', and 'North'."]
+  cur_score INT [default: 25000, note: "Current score of the player in the game. The default starting score is 25000."]
+  declared_riichi BOOLEAN [note: "Indicates whether the player has declared Riichi (a ready hand to win)."]
+}
+
+Table yaku {
+  id SERIAL [pk]
+  name TEXT [unique, not null, note: "The name of the Yaku (hand combination)"]
+  han_value INT [note: "The number of Han (points) awarded for this Yaku. Determines the hand's score."]
+  menzenchin_only BOOLEAN [note: "True if this Yaku can only be scored with a closed hand (not an open meld)."]
+  description TEXT [note: "A description of the Yaku, explaining how it can be achieved."]
+}
+
+Table player_yakus {
+  id SERIAL [pk]
+  player_status_id INT [ref: > player_status.id, note: "References the player_status record, indicating which player in which game got the Yaku."]
+  yaku_id INT [ref: > yaku.id, note: "References the specific Yaku that was achieved by the player."]
+}
+
+Table tiles {
+  id SERIAL [pk]
+  tile_code TEXT [unique, not null, note: "A unique identifier for each tile. Examples include '1m' (1 Man), '5p' (5 Pin), 'E' (East Wind), and 'C' (Chun)."]
+}
+
+Table hand_tile {
+  id SERIAL [pk]
+  player_status_id INT [ref: > player_status.id, note: "References the player_status, indicating which player the tile belongs to."]
+  tile_id INT [ref: > tiles.id, note: "References the tile that this hand_tile represents. Each tile can be used in multiple hand_tiles."]
+  is_in_meld BOOLEAN [note: "Indicates whether the tile is part of a meld (open meld or closed Kan). If false, it's part of the closed hand."]
+  position INT [note: "Position of the tile in the closed hand (only valid if is_in_meld is false). Values range from 0 to 13."]
+}
