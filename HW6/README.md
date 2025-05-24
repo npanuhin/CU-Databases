@@ -1,3 +1,6 @@
+<h1 align="center">HW6*</h1>
+
+
 The [`run.py`](run.py) file provides a usage demonstration:
 
 ```bash
