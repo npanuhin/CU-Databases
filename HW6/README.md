@@ -54,4 +54,4 @@ datetime = 8 bytes (timestamp: long)
 
 #### Requirements:
 
-- Python 3 (recent version, tested on 3.13) instaled
+- Python 3 installed (recent version, tested on 3.13)
