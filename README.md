@@ -7,8 +7,8 @@
 - [HW5](HW5) ✔️ 5/5
 - [HW6](HW6) ⏳ Waiting for assessment
 - [HW7](HW7) ⏳ Waiting for assessment
-- HW8 📋 WIP
+- HW8 ❌ Skipped
 
 <ul>
-  <li>Project 📋 TODO</li>
+  <li>Project 📋 WIP</li>
 </ul>
