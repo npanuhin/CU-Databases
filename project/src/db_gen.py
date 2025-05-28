@@ -26,7 +26,7 @@ TILES = [
     '0m', '0p', '0b'
 ]
 
-YAKUS = [
+YAKU = [
     ('Riichi', 1, True, 'Declared Riichi'),
     ('Tanyao', 1, False, 'All simples'),
     ('Pinfu', 1, False, 'No points for hand'),
@@ -100,13 +100,13 @@ def generate_player_statuses(game_ids: list[int], player_ids: list[int]) -> list
     return player_statuses
 
 
-def generate_player_yakus(player_status_ids: list[int], yaku_ids: list[int]) -> list[tuple[int, int]]:
-    player_yakus = []
+def generate_player_yaku(player_status_ids: list[int], yaku_ids: list[int]) -> list[tuple[int, int]]:
+    player_yaku = []
     for status in player_status_ids:
         if random.choice([True, False]):  # Player can either have a yaku or not (not winning)
             yaku = random.choice(yaku_ids)
-            player_yakus.append((status, yaku))
-    return player_yakus
+            player_yaku.append((status, yaku))
+    return player_yaku
 
 
 def generate_hand_tiles(player_status_ids: list[int], tile_codes: list[str]) -> list[tuple[int, str, bool, int]]:
@@ -127,9 +127,9 @@ def main():
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    print('Inserting yakus...')
+    print('Inserting yaku...')
     sql = 'INSERT INTO yaku (name, han_value, menzenchin_only, description) VALUES {}'
-    batch_insert(sql, YAKUS)
+    batch_insert(sql, YAKU)
 
     yaku_ids = [row['id'] for row in run_query('SELECT id FROM yaku')]
 
@@ -159,9 +159,9 @@ def main():
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    print('Inserting player yakus...')
-    sql = 'INSERT INTO player_yakus (player_status_id, yaku_id) VALUES {}'
-    batch_insert(sql, generate_player_yakus(player_status_ids, yaku_ids))
+    print('Inserting player yaku...')
+    sql = 'INSERT INTO player_yaku (player_status_id, yaku_id) VALUES {}'
+    batch_insert(sql, generate_player_yaku(player_status_ids, yaku_ids))
 
     # ------------------------------------------------------------------------------------------------------------------
 

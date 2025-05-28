@@ -36,7 +36,7 @@ Table yaku {
   description TEXT [note: "A description of the Yaku, explaining how it can be achieved."]
 }
 
-Table player_yakus {
+Table player_yaku {
   id SERIAL [pk]
   player_status_id INT [ref: > player_status.id, note: "References the player_status record, indicating which player in which game got the Yaku."]
   yaku_id INT [ref: > yaku.id, note: "References the specific Yaku that was achieved by the player."]

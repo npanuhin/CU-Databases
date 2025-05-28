@@ -51,7 +51,7 @@ def batch_insert(sql_template: str, values: list[str], max_params_per_query: int
 def clear_all_tables():
     run_query("""
         DELETE FROM hand_tile;
-        DELETE FROM player_yakus;
+        DELETE FROM player_yaku;
         DELETE FROM player_status;
         DELETE FROM games;
         DELETE FROM yaku;

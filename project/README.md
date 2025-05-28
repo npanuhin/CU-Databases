@@ -23,7 +23,7 @@ This project is inspired by the existing system called [Pantheon](https://riichi
 
 Meta-entities:
 - `player_status`: each player's state in a game — wind, score, Riichi status, etc.
-- `player_yakus`: maps which player_status earned which yaku in a game
+- `player_yaku`: maps which player_status earned which yaku in a game
 - `hand_tile`: maps which tiles are in each player's hand, their position, and meld status
 
 ### Database overview:

@@ -36,21 +36,16 @@ Table yaku {
   description TEXT
 }
 
-Table player_yakus {
+Table player_yaku {
   id SERIAL [pk]
   player_status_id INT [ref: > player_status.id]
   yaku_id INT [ref: > yaku.id]
 }
 
-Table tiles {
-  id SERIAL [pk]
-  tile_code TEXT [unique, not null]
-}
-
 Table hand_tile {
   id SERIAL [pk]
   player_status_id INT [ref: > player_status.id]
-  tile_id INT [ref: > tiles.id]
+  tile_code TEXT [not null]
   is_in_meld BOOLEAN
   position INT
 }

@@ -36,7 +36,7 @@ CREATE TABLE yaku (
   description TEXT
 );
 
-CREATE TABLE player_yakus (
+CREATE TABLE player_yaku (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   player_status_id INTEGER,
   yaku_id INTEGER,
@@ -63,7 +63,7 @@ CREATE INDEX idx_games_winner_id ON games(winner_id);
 CREATE INDEX idx_games_dealer_id ON games(dealer_id);
 CREATE INDEX idx_player_status_game_id ON player_status(game_id);
 CREATE INDEX idx_player_status_player_id ON player_status(player_id);
-CREATE INDEX idx_player_yakus_status_id ON player_yakus(player_status_id);
-CREATE INDEX idx_player_yakus_yaku_id ON player_yakus(yaku_id);
+CREATE INDEX idx_player_yaku_status_id ON player_yaku(player_status_id);
+CREATE INDEX idx_player_yaku_yaku_id ON player_yaku(yaku_id);
 CREATE INDEX idx_hand_tile_player_status_id ON hand_tile(player_status_id);
 CREATE INDEX idx_hand_tile_tile_code ON hand_tile(tile_code);
