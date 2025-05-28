@@ -54,7 +54,6 @@ def clear_all_tables():
         DELETE FROM player_yakus;
         DELETE FROM player_status;
         DELETE FROM games;
-        DELETE FROM tiles;
         DELETE FROM yaku;
         DELETE FROM players;
     """)

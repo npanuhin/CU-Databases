@@ -21,7 +21,9 @@ TILES = [
     # Winds
     'E', 'S', 'W', 'N',
     # Dragons
-    'C', 'B', 'D'
+    'C', 'B', 'D',
+    # Aka Dora (Red Dora)
+    '0m', '0p', '0b'
 ]
 
 YAKUS = [
@@ -73,12 +75,13 @@ def generate_players(n: int) -> list[tuple[str, str, int, str]]:
     return players
 
 
-def generate_games(player_ids: list[int], n: int) -> list[tuple[str, str | None, int, str, int]]:
+def generate_games(player_ids: list[int], n: int) -> list[tuple[str, str | None, int | None, str, int]]:
     games = []
     for _ in range(n):
         start_time = fake.date_this_year().isoformat()
-        end_time = fake.date_this_year().isoformat() if random.choice([True, False]) else None
-        winner_id = random.choice(player_ids)
+        is_finished = random.choice([True, False])
+        end_time = fake.date_this_year().isoformat() if is_finished else None
+        winner_id = random.choice(player_ids) if is_finished else None
         wind = random.choice(['East', 'South'])
         dealer_id = random.choice(player_ids)
         games.append((start_time, end_time, winner_id, wind, dealer_id))
@@ -106,11 +109,11 @@ def generate_player_yakus(player_status_ids: list[int], yaku_ids: list[int]) -> 
     return player_yakus
 
 
-def generate_hand_tiles(player_status_ids: list[int], tile_ids: list[int]) -> list[tuple[int, int, bool, int]]:
+def generate_hand_tiles(player_status_ids: list[int], tile_codes: list[str]) -> list[tuple[int, str, bool, int]]:
     hand_tiles = []
     for status in player_status_ids:
         for pos in range(14):
-            tile = random.choice(tile_ids)
+            tile = random.choice(tile_codes)
             is_in_meld = random.choice([True, False])
             hand_tiles.append((status, tile, is_in_meld, pos))
     return hand_tiles
@@ -121,14 +124,6 @@ def generate_hand_tiles(player_status_ids: list[int], tile_ids: list[int]) -> li
 def main():
     print('Clearing all tables...')
     clear_all_tables()
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    print('Inserting tiles...')
-    sql = 'INSERT INTO tiles (tile_code) VALUES {}'
-    batch_insert(sql, [[tile] for tile in TILES])
-
-    tile_ids = [row['id'] for row in run_query('SELECT id FROM tiles')]
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -171,8 +166,8 @@ def main():
     # ------------------------------------------------------------------------------------------------------------------
 
     print('Inserting hand tiles...')
-    sql = 'INSERT INTO hand_tile (player_status_id, tile_id, is_in_meld, position) VALUES {}'
-    batch_insert(sql, generate_hand_tiles(player_status_ids, tile_ids))
+    sql = 'INSERT INTO hand_tile (player_status_id, tile_code, is_in_meld, position) VALUES {}'
+    batch_insert(sql, generate_hand_tiles(player_status_ids, TILES))
 
 
 if __name__ == '__main__':

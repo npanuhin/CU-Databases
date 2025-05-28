@@ -44,19 +44,13 @@ CREATE TABLE player_yakus (
   FOREIGN KEY (yaku_id) REFERENCES yaku(id)
 );
 
-CREATE TABLE tiles (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  tile_code TEXT UNIQUE NOT NULL
-);
-
 CREATE TABLE hand_tile (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   player_status_id INTEGER,
-  tile_id INTEGER,
+  tile_code TEXT NOT NULL,
   is_in_meld BOOLEAN,
   position INTEGER,
   FOREIGN KEY (player_status_id) REFERENCES player_status(id),
-  FOREIGN KEY (tile_id) REFERENCES tiles(id),
   CHECK (is_in_meld = TRUE OR position IS NOT NULL)
 );
 
@@ -72,4 +66,4 @@ CREATE INDEX idx_player_status_player_id ON player_status(player_id);
 CREATE INDEX idx_player_yakus_status_id ON player_yakus(player_status_id);
 CREATE INDEX idx_player_yakus_yaku_id ON player_yakus(yaku_id);
 CREATE INDEX idx_hand_tile_player_status_id ON hand_tile(player_status_id);
-CREATE INDEX idx_hand_tile_tile_id ON hand_tile(tile_id);
+CREATE INDEX idx_hand_tile_tile_code ON hand_tile(tile_code);

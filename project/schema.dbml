@@ -42,15 +42,10 @@ Table player_yakus {
   yaku_id INT [ref: > yaku.id, note: "References the specific Yaku that was achieved by the player."]
 }
 
-Table tiles {
-  id SERIAL [pk]
-  tile_code TEXT [unique, not null, note: "A unique identifier for each tile. Examples include '1m' (1 Man), '5p' (5 Pin), 'E' (East Wind), and 'C' (Chun)."]
-}
-
 Table hand_tile {
   id SERIAL [pk]
   player_status_id INT [ref: > player_status.id, note: "References the player_status, indicating which player the tile belongs to."]
-  tile_id INT [ref: > tiles.id, note: "References the tile that this hand_tile represents. Each tile can be used in multiple hand_tiles."]
+  tile_code TEXT [not null, note: "The code of the tile, e.g., '1m', '5p', '0s', 'E', 'C'."]
   is_in_meld BOOLEAN [note: "Indicates whether the tile is part of a meld (open meld or closed Kan). If false, it's part of the closed hand."]
   position INT [note: "Position of the tile in the closed hand (only valid if is_in_meld is false). Values range from 0 to 13."]
 }

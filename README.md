@@ -10,5 +10,5 @@
 - HW8 ❌ Skipped
 
 <ul>
-  <li>Project 📋 WIP</li>
+  <li><a href="project">Project</a> 📋 WIP</li>
 </ul>

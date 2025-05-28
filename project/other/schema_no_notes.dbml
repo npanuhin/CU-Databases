@@ -1,0 +1,56 @@
+Project RiichiMahjong {
+  database_type: "PostgreSQL"
+}
+
+Table players {
+  id SERIAL [pk]
+  username TEXT [unique, not null]
+  display_name TEXT
+  rating INTEGER [default: 1500]
+  country TEXT
+}
+
+Table games {
+  id SERIAL [pk]
+  start_time TIMESTAMP
+  end_time TIMESTAMP
+  winner_id INT [ref: > players.id]
+  wind TEXT
+  dealer_id INT [ref: > players.id]
+}
+
+Table player_status {
+  id SERIAL [pk]
+  game_id INT [ref: > games.id]
+  player_id INT [ref: > players.id]
+  wind TEXT
+  cur_score INT [default: 25000]
+  declared_riichi BOOLEAN
+}
+
+Table yaku {
+  id SERIAL [pk]
+  name TEXT [unique, not null]
+  han_value INT
+  menzenchin_only BOOLEAN
+  description TEXT
+}
+
+Table player_yakus {
+  id SERIAL [pk]
+  player_status_id INT [ref: > player_status.id]
+  yaku_id INT [ref: > yaku.id]
+}
+
+Table tiles {
+  id SERIAL [pk]
+  tile_code TEXT [unique, not null]
+}
+
+Table hand_tile {
+  id SERIAL [pk]
+  player_status_id INT [ref: > player_status.id]
+  tile_id INT [ref: > tiles.id]
+  is_in_meld BOOLEAN
+  position INT
+}
