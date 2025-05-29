@@ -17,27 +17,26 @@ def get_top_winner():
     )
 
 
-def get_most_common_yakus():
+def get_most_common_yaku():
     sql = """
         SELECT y.name, COUNT(py.id) AS count
-        FROM player_yakus py
+        FROM player_yaku py
         JOIN yaku y ON py.yaku_id = y.id
         GROUP BY py.yaku_id
         ORDER BY count DESC
         LIMIT 5;
     """
     result = run_query(sql)
-    print('Top 5 most common Yakus:')
+    print('Top 5 most common Yaku:')
     for row in result:
         print(f'{row["name"]}: {row["count"]} times')
 
 
 def get_most_common_tiles():
     sql = """
-        SELECT t.tile_code, COUNT(ht.id) AS usage_count
+        SELECT ht.tile_code, COUNT(*) AS usage_count
         FROM hand_tile ht
-        JOIN tiles t ON ht.tile_id = t.id
-        GROUP BY ht.tile_id
+        GROUP BY ht.tile_code
         ORDER BY usage_count DESC
         LIMIT 10;
     """
@@ -49,11 +48,10 @@ def get_most_common_tiles():
 
 def get_most_common_meld_tiles():
     sql = """
-        SELECT t.tile_code, COUNT(ht.id) AS meld_count
+        SELECT ht.tile_code, COUNT(*) AS meld_count
         FROM hand_tile ht
-        JOIN tiles t ON ht.tile_id = t.id
         WHERE ht.is_in_meld == "true"
-        GROUP BY ht.tile_id
+        GROUP BY ht.tile_code
         ORDER BY meld_count DESC
         LIMIT 10;
     """
@@ -66,7 +64,7 @@ def get_most_common_meld_tiles():
 def main():
     get_top_winner()
     print()
-    get_most_common_yakus()
+    get_most_common_yaku()
     print()
     get_most_common_tiles()
     print()
